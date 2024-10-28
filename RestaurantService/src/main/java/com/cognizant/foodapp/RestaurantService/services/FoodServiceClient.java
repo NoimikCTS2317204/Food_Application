@@ -12,10 +12,15 @@ import com.cognizant.foodapp.RestaurantService.entity.FoodItems;
 
 
 
-@FeignClient(url="http://localhost:8082", value="FoodService-Client")
+@FeignClient(url="http://localhost:8082", name = "food-service")
 public interface FoodServiceClient {
 
     @GetMapping("/api/foodService/restaurant/{restaurantName}")
     List<FoodItems> getAllFoodItems(@PathVariable("restaurantName") String restaurantName);
+    
+    @GetMapping("/api/foodService/demo")
+    String getHelloWorld();
+    
+    
 }
 

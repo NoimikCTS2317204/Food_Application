@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,7 +22,7 @@ import com.cognizant.foodapp.FoodService.services.FoodServices;
 @RequestMapping("/api/foodService")
 
 
-
+@CrossOrigin("*")
 public class FoodServiceController {
 
 	@Autowired
@@ -47,8 +48,13 @@ public class FoodServiceController {
     
     @GetMapping("restaurant/{restaurantName}")
     public ResponseEntity<List<FoodItems>> getFoodsByRestaurantName(@PathVariable String restaurantName) {
-    	System.out.println(restaurantName);
+    	
         List<FoodItems> foodItems = foodServices.getAllByRestaurantName(restaurantName);
         return new ResponseEntity<>(foodItems, HttpStatus.OK);
+    }
+    
+    @GetMapping("/demo")
+    public String helloWorld() {
+    	return "Hello World";
     }
 }

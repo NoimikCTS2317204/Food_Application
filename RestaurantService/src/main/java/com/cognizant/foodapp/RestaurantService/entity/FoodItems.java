@@ -21,9 +21,9 @@ import lombok.ToString;
 public class FoodItems {
 	
 	
-    private Long foodId;
+	private Long foodId;
     private Long restaurantId;
-    private String restaurantName;
+    private String retaurantName;
     private String foodName;
     private String foodDescription;
     private Double foodPrice;

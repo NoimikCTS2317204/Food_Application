@@ -49,10 +49,12 @@ public class RestaurantServiceimpl implements RestaurantServices {
 	@Override
 	public List<RestaurantEntity> getAllRestaurantDetails() {
 		List<RestaurantEntity> restaurants = restaurantRepo.findAll();
+		
 		List<RestaurantEntity> newRestaurants = restaurants.stream().map(restaurant -> {
 		    restaurant.setFoodItems(foodServiceClient.getAllFoodItems(restaurant.getRestaurantName()));
 		    return restaurant; // Ensure the modified restaurant is returned
 		}).collect(Collectors.toList());
+		System.out.println(newRestaurants);
 		return newRestaurants;
 
 
@@ -62,10 +64,11 @@ public class RestaurantServiceimpl implements RestaurantServices {
 	@Override
 	public RestaurantEntity getByName(String restaurantName) {
 		// TODO Auto-generated method stub
-		 return restaurantRepo.findByRestaurantName(restaurantName).orElseThrow(()->new RuntimeException("No Question Found"));
+		  RestaurantEntity restaurentRepo= restaurantRepo.findByRestaurantName(restaurantName).orElseThrow(()->new RuntimeException("No Question Found"));
+		  restaurentRepo.setFoodItems(foodServiceClient.getAllFoodItems(restaurentRepo.getRestaurantName()));
+		  
+		  return restaurentRepo;
 	}
-
-
 
 
 

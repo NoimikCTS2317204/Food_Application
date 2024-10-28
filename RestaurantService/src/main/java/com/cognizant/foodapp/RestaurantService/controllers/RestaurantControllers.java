@@ -22,27 +22,30 @@ import com.cognizant.foodapp.RestaurantService.services.RestaurantServices;
 public class RestaurantControllers {
 	@Autowired
 	RestaurantServices restaurantServices;
-	
+
 	@Autowired
 	FoodServiceClient foodServiceClient;
+
+	@PostMapping
+	public ResponseEntity<RestaurantEntity> addRestaurant(@RequestBody RestaurantEntity restaurantEntity) {
+		RestaurantEntity createdRestaurant = restaurantServices.AddRestaurant(restaurantEntity);
+		return new ResponseEntity<>(createdRestaurant, HttpStatus.CREATED);
+	}
+
+	@GetMapping
+	public ResponseEntity<List<RestaurantEntity>> getAllRestaurantEntity() {
+		List<RestaurantEntity> restaurants = restaurantServices.getAllRestaurantDetails();
+		return new ResponseEntity<>(restaurants, HttpStatus.OK);
+	}
+
+	@GetMapping("/{restaurantName}")
+	public ResponseEntity<RestaurantEntity> getRestaurantByName(@PathVariable String restaurantName) {
+		RestaurantEntity restaurant = restaurantServices.getByName(restaurantName);
+		return new ResponseEntity<>(restaurant, HttpStatus.OK);
+	}
 	
-	
-
-@PostMapping
-public ResponseEntity<RestaurantEntity> addRestaurant(@RequestBody RestaurantEntity restaurantEntity) {
-    RestaurantEntity createdRestaurant = restaurantServices.AddRestaurant(restaurantEntity);
-    return new ResponseEntity<>(createdRestaurant, HttpStatus.CREATED);
-}
-
-@GetMapping
-public ResponseEntity<List<RestaurantEntity>> getAllRestaurantEntity() {
-    List<RestaurantEntity> restaurants = restaurantServices.getAllRestaurantDetails();
-    return new ResponseEntity<>(restaurants, HttpStatus.OK);
-}
-
-@GetMapping("/{restaurantName}")
-public ResponseEntity<RestaurantEntity> getRestaurantByName(@PathVariable String restaurantName) {
-    RestaurantEntity restaurant = restaurantServices.getByName(restaurantName);
-    return new ResponseEntity<>(restaurant, HttpStatus.OK);
-}
+	@GetMapping("/helloworld")
+	public String getHelloWorld() {
+		return foodServiceClient.getHelloWorld();
+	}
 }
